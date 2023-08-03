@@ -1,0 +1,23 @@
+<div>
+    <h2>Ranking</h2>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Player</th>
+                <th>Colonies</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set rank = 1 %}
+            {% for player in players %}
+            <tr>
+                <th>{{ rank }}</th>
+                <th>{{ player.name }}</th>
+                <td>{{ player.colonies|length }}</td>
+            </tr>
+            {% set rank = rank +1 %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

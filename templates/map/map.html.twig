@@ -1,0 +1,20 @@
+<div id="map">
+    {% for object in system.getStellarObjects() %}
+    <div class="position" hx-get="{{ path('stellar_object', {id: object.id}) }}" hx-trigger="click"
+        hx-target="#selected">
+        <p>{{ object.name }}</p>
+        <p>
+
+            {% if object.colonies|length %}
+            <img class="icon" src="{{ asset('pictures/icons/building.svg') }}" alt="">
+            {% endif %}
+            {% if object.fleets|length %}
+            <img class="icon" src="{{ asset('pictures/icons/rocket.svg') }}" alt="">
+            {% endif %}
+        </p>
+    </div>
+    {% endfor %}
+    <div id="moving_fleets" class="card">
+        {{ include("map/moving_fleets.html.twig") }}
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div>
+    <h2>Colonies</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>System</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for colony in colonies %}
+            <tr>
+                <th>
+                    <a hx-get="{{ path('colony', {id: colony.id}) }}" hx-target="#selected">
+                        {{ colony.name }}
+                    </a>
+                </th>
+                <td>{{ colony.getStellarObject().name }}</td>
+                <td>{{ colony.getStellarObject().getStarSystem().name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

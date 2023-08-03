@@ -1,0 +1,12 @@
+<div class="ship" id="ship{{ ship.id }}">
+    <img src="{{ asset('/pictures/ships/' ~ ship.type ~ '.png') }}" alt="">
+    <div>{{ ship.getName() }}</div>
+
+    <div>
+        {% if not fleet.destination %}
+        <button hx-patch="{{ path('fleet_split', {id:fleet.id, ship_id: ship.id}) }}" hx-target="#my_fleets"
+            hx-swap="beforeend">Split</button>
+        {% endif %}
+    </div>
+
+</div>

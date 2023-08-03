@@ -1,0 +1,4 @@
+<div class="resource" id="resource{{ resource.type }}" {% if swap is defined %}hx-swap-oob="true" {% endif %}>
+    <img src="{{ asset('/pictures/resources/' ~ resource.type ~ '.gif') }}" alt="">
+    {{ resource.stock }} {{ resource.getName() }}
+</div>

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div id="centered_div">
+    <p>
+        Welcome on GameHTMX ! It is a small project dedicated to explore <a href="https://htmx.org/">HTMX library</a>
+        that allow to make Single Page Application without a line of JavaScript ❤️. It is a classic 4X futuristic space
+        game like Ogame or Exile-Exodus, but in a ultralight version for the moment. Please feel free to contribute to
+        the project on GitHub.
+    </p>
+    {% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <form action="{{ path('app_welcome') }}" method="post">
+        <label for="username">Email:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}">
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password">
+        <br>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        <input type="hidden" name="_target_path" value="{{ path('app_index') }}">
+
+        <button type="submit">login</button>
+    </form>
+
+    <p>
+        New player ? Start <a href="{{ path('app_register') }}">creating an account</a> !
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,5 @@
+{{ include('fleet/fleet.html.twig', {fleet: fleet}) }}
+
+<div id="moving_fleets" class="card" hx-swap-oob="true">
+    {{ include("map/moving_fleets.html.twig") }}
+</div>

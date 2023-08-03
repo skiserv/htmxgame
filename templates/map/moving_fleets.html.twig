@@ -1,0 +1,37 @@
+<h3>Moving Fleets</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Fleet</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Arrived at</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fleet in moving_fleets %}
+        <tr>
+            <td>
+                {% if fleet.player == player %}
+                <a hx-get="{{ path('fleet', {id: fleet.id}) }}" hx-target="#selected">
+                    {{ fleet.name }} - {{ fleet.player.name }}
+                </a>
+                {% else %}
+                {{ fleet.name }} - {{ fleet.player.name }}
+                {% endif %}
+            </td>
+            <td>
+                <a hx-get="{{ path('stellar_object', {id: fleet.position.id}) }}" hx-target="#selected">
+                    {{ fleet.position.name }}
+                </a>
+            </td>
+            <td>
+                <a hx-get="{{ path('stellar_object', {id: fleet.destination.id}) }}" hx-target="#selected">
+                    {{ fleet.destination.name }}
+                </a>
+            </td>
+            <td>{{ fleet.getActionEnd()|format_datetime('short', 'short') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

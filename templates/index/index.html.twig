@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Index{% endblock %}
+
+{% block body %}
+
+{{ include('map/map.html.twig') }}
+
+<div id="colonies-list">
+    <ul>
+        {% for colony in player.colonies %}
+        <li class="btn">
+            <a hx-get="{{ path('colony', {id: colony.id}) }}" hx-target="#selected">
+                {{ colony.name }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div id="selected">
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,5 @@
+<div class="fleet-ships" id="fleet{{ fleet.id }}-ships" {% if swap is defined %}hx-swap-oob="true" {% endif %}>
+    {% for ship in ships %}
+    {{ include('fleet/ship.html.twig', {ship: ship, fleet:fleet}) }}
+    {% endfor %}
+</div>

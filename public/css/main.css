@@ -1,0 +1,160 @@
+:root {
+    --primary-color: #8ff7b2;
+    --primary-color-shadow: #67b180;
+    --primary-color-o: black;
+    --link-color: rgb(105, 105, 255);
+    --background-color: black;
+    --font-color: white;
+}
+
+body
+{
+    width: 100%;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--font-color);
+}
+
+header
+{
+    padding: 0.5em 0;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--primary-color-o);
+}
+
+nav {
+    padding: 0 1em;
+}
+a {
+    color: var(--link-color);
+}
+nav a, .btn a {
+    color: inherit;
+    text-decoration: inherit;
+    padding: 0.5em;
+}
+
+.btn {
+    display: inline-block;
+    border: 1px solid var(--primary-color-o);
+    padding: 0.2em;
+    color: inherit;
+    text-decoration: inherit;
+}
+
+
+.btn:hover {
+    background-color: var(--primary-color-o);
+    color: var(--primary-color);
+    display: inline-block;
+    padding: 0.2em;
+    box-shadow: 0.2em 0.2em 2em 0.2em var(--primary-color-o);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+}
+
+th, td {
+    border: 1px solid var(--primary-color-o);
+    padding: 0.2em;
+}
+
+.card, #selected>div {
+    background-color: var(--primary-color);
+    color: var(--primary-color-o);
+    padding: 0.5em 1em;
+    box-shadow: 0.5em 0.5em 0.5em var(--primary-color-shadow);
+    overflow: scroll;
+}
+
+#selected>div {
+    width: 20em;
+    position: absolute;
+    top: 5em;
+    left: 1em;
+    max-height: 80dvh;
+}
+
+#colonies-list {
+    background-color: var(--primary-color);
+    color:var(--primary-color-o);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 0.5em 0;
+}
+#colonies-list>ul{
+    text-align: center;
+    margin: 0;
+}
+
+#centered_div {
+    padding: 1em;
+    margin: 5em auto 0 auto;
+    width:fit-content;
+    max-width: 30em;
+    background-color: var(--primary-color);
+    color: var(--primary-color-o)
+}
+
+/* COMPONENTS */
+
+.building, .ship {
+    border: 1px solid var(--primary-color-o);
+    height: 3em;
+}
+
+.building>*, .ship>*{
+    margin: 0;
+}
+
+.building > img, .ship > img {
+    width: 3em;
+    float: left;
+}
+
+.fleet {
+    border: 1px solid var(--primary-color-o);
+}
+
+.fleet-ships {
+    max-height: 20em;
+    overflow: scroll;
+}
+
+
+/* MAP */
+
+#map {
+    margin: 1em auto;
+    width: 40em;
+    height: 40em;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.position {
+    text-align: left;
+    display: inline-block;
+    width: 32%;
+    height: 32%;
+    border: 1px solid var(--primary-color);
+    vertical-align: middle;
+    margin-bottom: 0.3em;
+}
+.position:hover {
+    box-shadow: 0 0  1em 0.2em var(--primary-color-shadow);
+}
+
+.position>p {
+    margin: 0;
+    font-size: 0.8em;
+}
+
+.position .icon {
+    filter: invert(88%) sepia(9%) saturate(1621%) hue-rotate(79deg) brightness(102%) contrast(94%);
+}

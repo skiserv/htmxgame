@@ -1,0 +1,38 @@
+<div>
+    <h2>{{ colony.name }}</h2>
+
+    <p>
+        <a hx-get="{{ path('stellar_object', {id: colony.getStellarObject().id}) }}" hx-target="#selected">
+            {{ colony.getStellarObject().name }} - {{ colony.getStellarObject().getStarSystem().name }}
+        </a>
+    </p>
+
+    <h3>Resources</h3>
+    <div>
+        {% for resource in colony.resources %}
+        {{ include('colony/resource.html.twig', {resource: resource}) }}
+        {% endfor %}
+    </div>
+
+    <div id="buildings">
+        <h3>Buildings</h3>
+        {% for building in colony.buildings %}
+        {{ include('colony/building.html.twig', {building: building}) }}
+        {% endfor %}
+    </div>
+    <div class="building">
+        {{ form(new_building_form) }}
+    </div>
+
+    <div>
+        {{ form(new_ship_form) }}
+    </div>
+    <div id="my_fleets">
+        <h3>My Fleets</h3>
+        {% for fleet in colony.getStellarObject().fleets %}
+        {% if not fleet.destination %}
+        {{ include('colony/fleet.html.twig', {fleet: fleet}) }}
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>

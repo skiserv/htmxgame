@@ -1,0 +1,25 @@
+<div>
+    <h2>Fleets</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>System</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fleet in fleets %}
+            <tr>
+                <th>
+                    <a hx-get="{{ path('fleet', {id: fleet.id}) }}" hx-target="#selected">
+                        {{ fleet.name }}
+                    </a>
+                </th>
+                <td>{{ fleet.position.name }}</td>
+                <td>{{ fleet.position.getStarSystem().name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

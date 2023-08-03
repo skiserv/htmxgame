@@ -1,0 +1,9 @@
+<div class="building" id="building{{ building.type }}">
+    <img src="{{ asset('/pictures/buildings/' ~ building.type ~ '.png') }}" alt="">
+    <p>{{ building.name }} ({{ building.level }})</p>
+    <p>
+        <button hx-put="{{ path('building_update', {colony_id: building.colony.id, id: building.id}) }}"
+            hx-target="#building{{ building.type }}" hx-swap="outerHTML">Upgrade for {{ building.getNextLevelPrice() }}
+            metal</button>
+    </p>
+</div>

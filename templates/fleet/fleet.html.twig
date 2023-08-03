@@ -1,0 +1,44 @@
+<div class="fleet" id="fleet{{ fleet.id }}">
+    {{ include('fleet/fleet_details.html.twig', {fleet: fleet}) }}
+
+    {% if not fleet.destination %}
+    <p>
+        <a hx-get="{{ path('stellar_object', {id: fleet.position.id}) }}" hx-target="#selected">
+            {{ fleet.position.name }} - {{ fleet.position.getStarSystem().name }}
+        </a>
+    </p>
+    <div>
+        {{ form(travel_form, {'attr': {'hx-post': path('fleet_travel', {id: fleet.id}), 'hx-target': '#fleet' ~
+        fleet.id, 'hx-trigger': 'submit', 'hx-swap': "outerHTML"}}) }}
+    </div>
+    {% else %}
+    <p>Flying from <a hx-get="{{ path('stellar_object', {id: fleet.position.id}) }}" hx-target="#selected">{{
+            fleet.position.name }} - {{ fleet.position.getStarSystem().name }}</a> to <a
+            hx-get="{{ path('stellar_object', {id: fleet.position.id}) }}" hx-target="#selected">{{
+            fleet.destination.name }} - {{ fleet.destination.getStarSystem().name }}</a></p>
+    {% endif %}
+
+
+    {{ include('fleet/ships.html.twig', {ships: fleet.ships, fleet: fleet}) }}
+
+    {% if not fleet.destination %}
+    <div id="my_fleets">
+        <h3>Other Fleets</h3>
+        {% for other_fleet in fleet.position.fleets %}
+        {% if other_fleet != fleet and not other_fleet.destination %}
+        <div class="fleet" id="fleet{{ other_fleet.id }}">
+            <div>
+                <a hx-get="{{ path('fleet', {id: other_fleet.id}) }}" hx-target="#selected">
+                    {{ other_fleet.name }}
+                </a>
+                {% if other_fleet.player == fleet.player %}
+                <button hx-patch="{{ path('fleet_absorb', {id: fleet.id, victim_id: other_fleet.id }) }}"
+                    hx-target="#fleet{{ other_fleet.id }}" hx-swap="delete">Absorb</button>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>

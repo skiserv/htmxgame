@@ -1,0 +1,8 @@
+<div>
+    <a hx-get="{{ path('fleet', {id: fleet.id}) }}" hx-target="#selected">
+        {{ fleet.name }}
+    </a>
+    <button hx-get="{{ path('fleet_edit', {id: fleet.id}) }}" hx-target="closest div">
+        Edit
+    </button>
+</div>

@@ -1,0 +1,36 @@
+<div>
+    <div>
+        <a hx-get="{{ path('stellar_object', {id: object.id}) }}" hx-target="#selected">
+            {{ object.name }}
+        </a>
+    </div>
+
+    {% if object.fleets|length %}
+    <div>
+        <h3>Fleets</h3>
+        {% for fleet in object.fleets %}
+        {% if not fleet.destination %}
+        <div>
+            <a hx-get="{{ path('fleet', {id: fleet.id}) }}" hx-target="#selected">
+                {{ fleet.name }} - {{ fleet.player.name }}
+            </a>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if object.colonies|length %}
+    <div>
+        <h3>Colonies</h3>
+        {% for colony in object.colonies %}
+        <div>
+            <a hx-get="{{ path('colony', {id: colony.id}) }}" hx-target="#selected">
+                {{ colony.name }} - {{ colony.player.name }}
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</div>
