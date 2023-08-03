@@ -10,7 +10,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 class PlayerService
 {
     public User $user;
-    public Player $player;
+    public ?Player $player;
 
     public function __construct(
         RequestStack $requestStack,
