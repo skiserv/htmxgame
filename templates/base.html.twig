@@ -20,6 +20,9 @@
     <header>
         {% block header %}
         <nav>
+            <a id="github" href="https://github.com/skiserv/htmxgame" target="_blank">
+                <img src="{{ asset('pictures/icons/logo--github.svg') }}" alt="github logo">
+            </a>
             <a class="btn" href="{{ path('app_index') }}">/HTMXGame</a>
             <a class="btn" hx-get="{{ path('colonies') }}" hx-target="#selected">Colonies</a>
             <a class="btn" hx-get="{{ path('fleets') }}" hx-target="#selected">Fleets</a>

@@ -24,8 +24,15 @@ header
 }
 
 nav {
-    padding: 0 1em;
+    width: 100%;
 }
+
+#github>img {
+    height: 1.7em;
+    position: relative;
+    bottom: -0.5em;
+}
+
 a {
     color: var(--link-color);
 }
