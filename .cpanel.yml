@@ -1,0 +1,22 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/arle6195/websites/space/
+    #- /home/arle6195/bin/komposer require symfony/requirements-checker
+    - /home/arle6195/bin/komposer install --no-dev --optimize-autoloader
+    - /usr/local/bin/php bin/console doctrine:migrations:migrate
+    - APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
+    - /bin/rm -rf $DEPLOYPATH/*
+    - /bin/cp -R bin $DEPLOYPATH
+    - /bin/cp -R config $DEPLOYPATH
+    - /bin/cp -R migrations $DEPLOYPATH
+    - /bin/cp -R public $DEPLOYPATH
+    - /bin/cp -R src $DEPLOYPATH
+    - /bin/cp -R templates $DEPLOYPATH
+    - /bin/cp -R translations $DEPLOYPATH
+    - /bin/cp -R vendor $DEPLOYPATH
+    - /bin/cp composer.json $DEPLOYPATH
+    - /bin/cp composer.lock $DEPLOYPATH
+    - /bin/cp symfony.lock $DEPLOYPATH
+    - /bin/cp .env $DEPLOYPATH
+    - /bin/cp .env.local $DEPLOYPATH
