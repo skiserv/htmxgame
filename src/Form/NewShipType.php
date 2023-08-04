@@ -14,7 +14,7 @@ class NewShipType extends AbstractType
     {
         $choices = [];
         foreach (Ship::$stats as $key => $s) {
-            $choices[$s['name'] . " (" . $s['price'][0] . " metal, " . $s['price'][1] . " crystal)"] = $key;
+            $choices[$s['name'] . " (" . $s['price'][0] . " metal, " . $s['price'][1] . " hydro)"] = $key;
         }
         $builder
             ->add('type', ChoiceType::class, [
