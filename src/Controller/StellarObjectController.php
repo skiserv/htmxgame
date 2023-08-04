@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\StellarObjectRepository;
+use App\Service\PlayerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -18,6 +19,7 @@ class StellarObjectController extends AbstractController
     public function stellarObject(
         int $id,
         StellarObjectRepository $stellarObjectRepository,
+        PlayerService $playerService,
     ): Response {
         $object = $stellarObjectRepository->find($id);
         if (!$object) {
@@ -25,6 +27,7 @@ class StellarObjectController extends AbstractController
         }
         return $this->render('stellar_object/stellar_object.html.twig', [
             'object' => $object,
+            'player' => $playerService->player,
         ]);
     }
 }

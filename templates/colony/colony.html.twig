@@ -1,5 +1,9 @@
 <div>
-    <h2>{{ colony.name }}</h2>
+    <h2>
+        <a hx-get="{{ path('colony', {id: colony.id}) }}" hx-target="#selected">
+            {{ colony.name }}
+        </a>
+    </h2>
 
     <p>
         <a hx-get="{{ path('stellar_object', {id: colony.getStellarObject().id}) }}" hx-target="#selected">
