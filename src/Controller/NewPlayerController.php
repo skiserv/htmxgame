@@ -2,11 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Colony;
-use App\Entity\ColonyBuilding;
 use App\Entity\Player;
 use App\Form\NewPlayerType;
 use App\Repository\StellarObjectRepository;
+use App\Service\NewColonyService;
 use App\Service\PlayerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,6 +20,7 @@ class NewPlayerController extends AbstractController
         Request $request,
         EntityManagerInterface $doctrine,
         StellarObjectRepository $stellarObjectRepository,
+        NewColonyService $newColonyService,
     ) {
         if ($playerService->player) {
             return $this->redirectToRoute('app_index');
@@ -29,22 +29,17 @@ class NewPlayerController extends AbstractController
         $form = $this->createForm(NewPlayerType::class, $new_player);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $playerService->user->setPlayer($new_player);
             $new_player = $form->getData();
+            $playerService->user->setPlayer($new_player);
             $doctrine->persist($new_player);
 
+            $playerService->player = $new_player;
+
             $start_planet = $stellarObjectRepository->findOneBy(['special' => 1]);
-            $colony = new Colony();
-            $colony->setName($new_player->getName() . " colony");
-            $colony->setPlayer($new_player);
-            $colony->setStellarObject($start_planet);
-            $mine = new ColonyBuilding();
-            $mine->setType(0);
-            $colony->addBuilding($mine);
-            $doctrine->persist($mine);
-            $doctrine->persist($colony);
+            $newColonyService->createColony(object: $start_planet, flush: false);
 
             $doctrine->flush();
+
             return $this->redirectToRoute('app_index');
         }
 

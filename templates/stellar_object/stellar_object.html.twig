@@ -5,6 +5,14 @@
         </a>
     </h2>
 
+    <p>
+        {% if object.isColonizable() %}
+        Colonizable : Yes
+        {% else %}
+        Colonizable : No
+        {% endif %}
+    </p>
+
     {% if object.fleets|length %}
     <div>
         <h3>Fleets</h3>

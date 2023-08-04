@@ -66,6 +66,12 @@ class Ship
             'price' => [10000, 2000],
             'speed' => 750,
         ],
+        [
+            'name'  => 'Colony Ship',
+            'price' => [50000, 10000],
+            'speed' => 100,
+            'colony' => true,
+        ]
     ];
 
     public function getName(): string
@@ -76,5 +82,13 @@ class Ship
     public function getPrice(): int
     {
         return $this::$stats[$this->type]["price"];
+    }
+
+    public function isColony(): bool
+    {
+        if (!isset($this::$stats[$this->type]["colony"])) {
+            return false;
+        }
+        return $this::$stats[$this->type]["colony"];
     }
 }

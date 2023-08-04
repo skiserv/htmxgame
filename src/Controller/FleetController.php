@@ -6,6 +6,7 @@ use App\Entity\Fleet;
 use App\Form\FleetEditType;
 use App\Form\FleetTravelType;
 use App\Repository\FleetRepository;
+use App\Service\NewColonyService;
 use App\Service\PlayerService;
 use DateInterval;
 use DateTime;
@@ -13,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -205,5 +207,57 @@ class FleetController extends AbstractController
             'fleet/action/split.html.twig',
             ['other_fleet' => $new_fleet, 'fleet' => $fleet],
         );
+    }
+
+    #[Route(
+        '/fleet/{id}/colonize/',
+        name: 'fleet_colonize',
+        methods: ['POST'],
+    )]
+    public function colonize(
+        int $id,
+        FleetRepository $fleetRepository,
+        PlayerService $playerService,
+        NewColonyService $newColonyService,
+        EntityManagerInterface $doctrine,
+    ): Response {
+        $fleet = $fleetRepository->find($id);
+        if (!$fleet || $playerService->player != $fleet->getPlayer()) {
+            throw new NotFoundHttpException();
+        }
+
+        if (!$fleet->getPosition()->isColonizable()) {
+            throw new BadRequestHttpException("Not colonizable");
+        }
+
+        foreach ($fleet->getPosition()->getColonies() as $colony) {
+            if ($colony->getPlayer() == $playerService->player) {
+                throw new BadRequestHttpException("Player already have a colony here");
+            }
+        }
+
+        $found_colo = false;
+        foreach ($fleet->getShips() as $ship) {
+            if ($ship->isColony()) {
+                $fleet->removeShip($ship);
+                $doctrine->remove($ship);
+                $found_colo = true;
+                continue;
+            }
+        }
+
+        if (!$found_colo) {
+            throw new BadRequestHttpException("Missing colony ship in the fleet");
+        }
+
+        if (!$fleet->getShips()->count()) {
+            $doctrine->remove($fleet);
+        }
+
+        $newColonyService->createColony($fleet->getPosition());
+
+        $doctrine->flush();
+
+        return $this->render('fleet/action/colonize.html.twig', []);
     }
 }

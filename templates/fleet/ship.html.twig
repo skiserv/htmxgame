@@ -6,6 +6,10 @@
         {% if not fleet.destination %}
         <button hx-put="{{ path('fleet_split', {id:fleet.id, ship_id: ship.id}) }}" hx-target="#ship{{ ship.id }}"
             hx-swap="delete">Split</button>
+        {% if ship.isColony() %}
+        <button hx-post="{{ path('fleet_colonize', {id:fleet.id}) }}" hx-target="#ship{{ ship.id }}"
+            hx-swap="delete">Colonize</button>
+        {% endif %}
         {% endif %}
     </div>
 
