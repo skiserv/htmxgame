@@ -40,6 +40,9 @@ class StellarObject
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $special = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $colonizable = null;
+
     public function __construct()
     {
         $this->colonies = new ArrayCollection();
@@ -186,6 +189,18 @@ class StellarObject
     public function setSpecial(?int $special): static
     {
         $this->special = $special;
+
+        return $this;
+    }
+
+    public function isColonizable(): ?bool
+    {
+        return $this->colonizable;
+    }
+
+    public function setColonizable(?bool $colonizable): static
+    {
+        $this->colonizable = $colonizable;
 
         return $this;
     }
