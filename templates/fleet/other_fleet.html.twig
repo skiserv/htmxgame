@@ -1,0 +1,11 @@
+<div class="fleet" id="fleet{{ other_fleet.id }}">
+    <div>
+        <a hx-get="{{ path('fleet', {id: other_fleet.id}) }}" hx-target="#selected">
+            {{ other_fleet.name }}
+        </a>
+        {% if other_fleet.player == fleet.player %}
+        <button hx-put="{{ path('fleet_absorb', {id: fleet.id, victim_id: other_fleet.id }) }}"
+            hx-target="#fleet{{ other_fleet.id }}" hx-swap="delete">Absorb</button>
+        {% endif %}
+    </div>
+</div>

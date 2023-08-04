@@ -22,21 +22,11 @@
     {{ include('fleet/ships.html.twig', {ships: fleet.ships, fleet: fleet}) }}
 
     {% if not fleet.destination %}
-    <div id="my_fleets">
+    <div id="other_fleets">
         <h3>Other Fleets</h3>
         {% for other_fleet in fleet.position.fleets %}
         {% if other_fleet != fleet and not other_fleet.destination %}
-        <div class="fleet" id="fleet{{ other_fleet.id }}">
-            <div>
-                <a hx-get="{{ path('fleet', {id: other_fleet.id}) }}" hx-target="#selected">
-                    {{ other_fleet.name }}
-                </a>
-                {% if other_fleet.player == fleet.player %}
-                <button hx-patch="{{ path('fleet_absorb', {id: fleet.id, victim_id: other_fleet.id }) }}"
-                    hx-target="#fleet{{ other_fleet.id }}" hx-swap="delete">Absorb</button>
-                {% endif %}
-            </div>
-        </div>
+        {{ include('fleet/other_fleet.html.twig') }}
         {% endif %}
         {% endfor %}
     </div>

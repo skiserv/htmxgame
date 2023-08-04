@@ -1,0 +1,5 @@
+{# Main swap will delete ship in the list. Then we can add the new fleet in the other fleets list with oob swap #}
+
+<div hx-swap-oob="beforeend:#other_fleets"> {# default is innerHTML so this container div will disapear at swap :) #}
+    {{ include('fleet/other_fleet.html.twig', {other_fleet: other_fleet, fleet: fleet}) }}
+</div>

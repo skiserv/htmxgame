@@ -4,8 +4,8 @@
 
     <div>
         {% if not fleet.destination %}
-        <button hx-patch="{{ path('fleet_split', {id:fleet.id, ship_id: ship.id}) }}" hx-target="#my_fleets"
-            hx-swap="beforeend">Split</button>
+        <button hx-put="{{ path('fleet_split', {id:fleet.id, ship_id: ship.id}) }}" hx-target="#ship{{ ship.id }}"
+            hx-swap="delete">Split</button>
         {% endif %}
     </div>
 

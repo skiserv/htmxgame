@@ -82,7 +82,6 @@ class FleetController extends AbstractController
 
         return $this->render('fleet/action/travel.html.twig', [
             'fleet'         => $fleet,
-            'detailed'      => true,
             'moving_fleets' => $moving_fleets,
             'player'        => $playerService->player,
         ]);
@@ -111,16 +110,22 @@ class FleetController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $fleet = $form->getData();
             $doctrine->flush();
-            return $this->render('fleet/fleet_details.html.twig', ['fleet' => $fleet]);
+            return $this->render(
+                'fleet/fleet_details.html.twig',
+                ['fleet' => $fleet]
+            );
         } else {
-            return $this->render('fleet/fleet_details_edit.html.twig', ['form' => $form, 'fleet' => $fleet]);
+            return $this->render(
+                'fleet/fleet_details_edit.html.twig',
+                ['form' => $form, 'fleet' => $fleet],
+            );
         }
     }
 
     #[Route(
         '/fleet/{id}/absorb/{victim_id}',
         name: 'fleet_absorb',
-        methods: ['PATCH']
+        methods: ['PUT']
     )]
     public function absorbFleet(
         int $id,
@@ -147,15 +152,15 @@ class FleetController extends AbstractController
         $doctrine->remove($victim);
         $doctrine->flush();
 
-        return $this->render("fleet/absorb.html.twig", [
-            'ships' => $fleet->getShips(), 'fleet' => $fleet, 'swap' => true
+        return $this->render("fleet/action/absorb.html.twig", [
+            'ships' => $fleet->getShips(), 'fleet' => $fleet,
         ]);
     }
 
     #[Route(
         '/fleet/{id}/split/{ship_id}',
         name: 'fleet_split',
-        methods: ['PATCH'],
+        methods: ['PUT'],
     )]
     public function splitFleet(
         int $id,
@@ -196,9 +201,9 @@ class FleetController extends AbstractController
         $doctrine->persist($new_fleet);
         $doctrine->flush();
 
-        # ToDo : fix and change for only fleet name
-        return $this->render('fleet/fleet.html.twig', [
-            'fleet' => $new_fleet, 'split' => true
-        ]);
+        return $this->render(
+            'fleet/action/split.html.twig',
+            ['other_fleet' => $new_fleet, 'fleet' => $fleet],
+        );
     }
 }
