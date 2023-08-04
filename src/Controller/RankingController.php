@@ -14,7 +14,7 @@ class RankingController extends AbstractController
     public function ranking(
         PlayerRepository $playerRepository
     ): Response {
-        $players = $playerRepository->findAll();
+        $players = $playerRepository->getPlayersByColonyNumber();
         return $this->render('ranking/index.html.twig', [
             'players' => $players,
         ]);
