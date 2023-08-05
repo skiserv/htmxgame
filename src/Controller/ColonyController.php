@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ColonyBuilding;
 use App\Entity\Fleet;
 use App\Entity\Ship;
+use App\Form\ColonyNameEdit;
 use App\Form\NewBuildingType;
 use App\Form\NewShipType;
 use App\Repository\ColonyRepository;
@@ -191,5 +192,39 @@ class ColonyController extends AbstractController
             'fleet'     => $new_fleet,
             'resources' => []
         ]);
+    }
+
+    #[Route(
+        'colony/{id}/edit',
+        name: 'colony_edit',
+        methods: ['POST', 'GET'],
+    )]
+    public function rename(
+        int $id,
+        Request $request,
+        ColonyRepository $colonyRepository,
+        PlayerService $playerService,
+        EntityManagerInterface $doctrine,
+    ): Response {
+        $colony = $colonyRepository->find($id);
+        if (!$colony || $playerService->player != $colony->getPlayer()) {
+            throw new NotFoundHttpException();
+        }
+
+        $form = $this->createForm(ColonyNameEdit::class, $colony);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $colony = $form->getData();
+            $doctrine->flush();
+            return $this->render(
+                'colony/name.html.twig',
+                ['colony' => $colony]
+            );
+        } else {
+            return $this->render(
+                'colony/name_edit.html.twig',
+                ['form' => $form, 'colony' => $colony],
+            );
+        }
     }
 }

@@ -1,9 +1,5 @@
 <div>
-    <h2>
-        <a hx-get="{{ path('colony', {id: colony.id}) }}" hx-target="#selected">
-            {{ colony.name }}
-        </a>
-    </h2>
+    {{ include('colony/name.html.twig', {colony: colony})}}
 
     <p>
         <a hx-get="{{ path('stellar_object', {id: colony.getStellarObject().id}) }}" hx-target="#selected">
