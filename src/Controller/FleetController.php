@@ -254,10 +254,13 @@ class FleetController extends AbstractController
             $doctrine->remove($fleet);
         }
 
-        $newColonyService->createColony($fleet->getPosition());
+        $new_colony = $newColonyService->createColony($fleet->getPosition());
 
         $doctrine->flush();
 
-        return $this->render('fleet/action/colonize.html.twig', []);
+        return $this->render(
+            'fleet/action/colonize.html.twig',
+            ['new_colony' => $new_colony],
+        );
     }
 }

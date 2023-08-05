@@ -6,17 +6,15 @@
 
 {{ include('map/map.html.twig') }}
 
-<div id="colonies-list">
-    <ul>
-        {% for colony in player.colonies %}
-        <li class="btn">
-            <a hx-get="{{ path('colony', {id: colony.id}) }}" hx-target="#selected">
-                {{ colony.name }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-</div>
+<ul id="colonies-list">
+    {% for colony in player.colonies %}
+    <li class="btn">
+        <a hx-get="{{ path('colony', {id: colony.id}) }}" hx-target="#selected">
+            {{ colony.name }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
 
 <div id="selected">
 

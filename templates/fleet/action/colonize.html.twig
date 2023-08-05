@@ -1,1 +1,9 @@
 {#delete ship so empty content#}
+
+<div hx-swap-oob="beforeend:#colonies-list">
+    <li class="btn">
+        <a hx-get="{{ path('colony', {id: new_colony.id}) }}" hx-target="#selected">
+            {{ new_colony.name }}
+        </a>
+    </li>
+</div>
