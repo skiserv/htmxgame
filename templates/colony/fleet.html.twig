@@ -1,5 +1,9 @@
 <div>
+    {% if fleet.player == colony.player %}
     <a hx-get="{{ path('fleet', {id: fleet.id}) }}" hx-target="#selected">
-        {{ fleet.name }} - {{ fleet.player.name }}
+        {{ fleet.name }}
     </a>
+    {% else %}
+    {{ fleet.name }} - {{ fleet.player.name }}
+    {% endif %}
 </div>

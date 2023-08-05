@@ -121,9 +121,6 @@ th, td {
     float: left;
 }
 
-.fleet {
-    border: 1px solid var(--primary-color-o);
-}
 
 .fleet-ships {
     max-height: 20em;
