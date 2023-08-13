@@ -27,6 +27,12 @@
             <a class="btn" hx-get="{{ path('colonies') }}" hx-target="#selected">Colonies</a>
             <a class="btn" hx-get="{{ path('fleets') }}" hx-target="#selected">Fleets</a>
             <a class="btn" hx-get="{{ path('ranking') }}" hx-target="#selected">Ranking</a>
+            <a class="btn" hx-get="{{ path('notifications') }}" hx-target="#selected">
+                Notifications
+                <!--{% if player is defined %}
+                (<span id="unread_notif">{{ player.getUnreadNotifications() }}</span>)
+                {% endif %}-->
+            </a>
             <a class="btn" href="{{ path('app_logout') }}">Logout</a>
         </nav>
         {% endblock %}

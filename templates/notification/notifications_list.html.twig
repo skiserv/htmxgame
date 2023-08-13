@@ -1,0 +1,8 @@
+<div>
+    <h3>Notifications</h3>
+    {% for notif in notifs %}
+    <div>
+        {{ notif.createdAt|format_datetime('short', 'short') }} - {{ notif.content }}
+    </div>
+    {% endfor %}
+</div>
