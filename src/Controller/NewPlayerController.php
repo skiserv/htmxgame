@@ -8,6 +8,7 @@ use App\Repository\StellarObjectRepository;
 use App\Service\NewColonyService;
 use App\Service\PlayerService;
 use Doctrine\ORM\EntityManagerInterface;
+use NotificationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +22,7 @@ class NewPlayerController extends AbstractController
         EntityManagerInterface $doctrine,
         StellarObjectRepository $stellarObjectRepository,
         NewColonyService $newColonyService,
+        NotificationService $notificationService,
     ) {
         if ($playerService->player) {
             return $this->redirectToRoute('app_index');
@@ -36,7 +38,9 @@ class NewPlayerController extends AbstractController
             $playerService->player = $new_player;
 
             $start_planet = $stellarObjectRepository->findOneBy(['special' => 1]);
-            $newColonyService->createColony(object: $start_planet, flush: false);
+            $newColonyService->createColony(object: $start_planet);
+
+            $notificationService->createNotification($new_player, 0, "Welcome on the game !");
 
             $doctrine->flush();
 

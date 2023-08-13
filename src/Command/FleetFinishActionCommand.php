@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Repository\FleetRepository;
+use App\Service\NotificationService as ServiceNotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -19,6 +20,7 @@ class FleetFinishActionCommand extends Command
     public function __construct(
         private FleetRepository $fleetRepository,
         private EntityManagerInterface $doctrine,
+        private ServiceNotificationService $notificationService,
     ) {
         parent::__construct();
     }
@@ -32,6 +34,12 @@ class FleetFinishActionCommand extends Command
             $fleet->setPosition($fleet->getDestination());
             $fleet->setDestination(null);
             $fleet->setActionEnd(null);
+
+            $this->notificationService->createNotification(
+                $fleet->getPlayer(),
+                1,
+                'Your fleet ' . $fleet->getName() . ' arrived on ' . $fleet->getPosition()->getName() . '.',
+            );
         }
         $this->doctrine->flush();
 

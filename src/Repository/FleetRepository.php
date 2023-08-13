@@ -43,6 +43,7 @@ class FleetRepository extends ServiceEntityRepository
     public function getFinishedAction()
     {
         return $this->createQueryBuilder('f')
+            ->leftJoin('f.player', 'p')
             ->andWhere('f.action_end IS NOT NULL')
             ->andWhere('f.action_end <= :now')
             ->setParameter('now', new DateTime())
